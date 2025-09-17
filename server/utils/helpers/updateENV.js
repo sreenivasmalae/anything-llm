@@ -332,6 +332,20 @@ const KEY_MAPPING = {
     checks: [],
   },
 
+  // ChromaCloud Options
+  ChromaCloudApiKey: {
+    envKey: "CHROMACLOUD_API_KEY",
+    checks: [isNotEmpty],
+  },
+  ChromaCloudTenant: {
+    envKey: "CHROMACLOUD_TENANT",
+    checks: [isNotEmpty],
+  },
+  ChromaCloudDatabase: {
+    envKey: "CHROMACLOUD_DATABASE",
+    checks: [isNotEmpty],
+  },
+
   // Weaviate Options
   WeaviateEndpoint: {
     envKey: "WEAVIATE_ENDPOINT",
@@ -563,6 +577,10 @@ const KEY_MAPPING = {
     envKey: "AGENT_TAVILY_API_KEY",
     checks: [],
   },
+  AgentExaApiKey: {
+    envKey: "AGENT_EXA_API_KEY",
+    checks: [],
+  },
 
   // TTS/STT Integration ENVS
   TextToSpeechProvider: {
@@ -686,6 +704,20 @@ const KEY_MAPPING = {
     envKey: "MOONSHOT_AI_MODEL_PREF",
     checks: [isNotEmpty],
   },
+
+  // CometAPI Options
+  CometApiLLMApiKey: {
+    envKey: "COMETAPI_LLM_API_KEY",
+    checks: [isNotEmpty],
+  },
+  CometApiLLMModelPref: {
+    envKey: "COMETAPI_LLM_MODEL_PREF",
+    checks: [isNotEmpty],
+  },
+  CometApiLLMTimeout: {
+    envKey: "COMETAPI_LLM_TIMEOUT_MS",
+    checks: [],
+  },
 };
 
 function isNotEmpty(input = "") {
@@ -795,6 +827,7 @@ function supportedLLM(input = "") {
     "ppio",
     "dpais",
     "moonshotai",
+    "cometapi",
   ].includes(input);
   return validSelection ? null : `${input} is not a valid LLM provider.`;
 }
@@ -841,6 +874,7 @@ function supportedEmbeddingModel(input = "") {
 function supportedVectorDB(input = "") {
   const supported = [
     "chroma",
+    "chromacloud",
     "pinecone",
     "lancedb",
     "weaviate",
@@ -1094,6 +1128,8 @@ function dumpENV() {
     ...Object.values(KEY_MAPPING).map((values) => values.envKey),
     // Manually Add Keys here which are not already defined in KEY_MAPPING
     // and are either managed or manually set ENV key:values.
+    "JWT_EXPIRY",
+
     "STORAGE_DIR",
     "SERVER_PORT",
     // For persistent data encryption
@@ -1116,6 +1152,7 @@ function dumpENV() {
     // Simple SSO
     "SIMPLE_SSO_ENABLED",
     "SIMPLE_SSO_NO_LOGIN",
+    "SIMPLE_SSO_NO_LOGIN_REDIRECT",
     // Community Hub
     "COMMUNITY_HUB_BUNDLE_DOWNLOADS_ENABLED",
 
